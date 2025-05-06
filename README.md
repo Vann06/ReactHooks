@@ -72,11 +72,12 @@ http://localhost:8000
 
 ![image](https://github.com/user-attachments/assets/c7ce1e4f-286f-49c9-8622-485fe3473a4a)
 
-![image](https://github.com/user-attachments/assets/c7ce1e4f-286f-49c9-8622-485fe3473a4a)
+![image](https://github.com/user-attachments/assets/bf762030-388b-4697-82b2-4803a5f8ef3c)
+
 
 ---
 
-## Autor
+## 💜 Autor
 
 Vianka Castro - 23201
 
