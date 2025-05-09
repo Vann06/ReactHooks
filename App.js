@@ -1,60 +1,44 @@
-const {useContext} = React;
-const { ThemeProvider, ThemeContext } = window;
+const { useState, useCallback } = React;
 
+function App() {
+  // variable de numero aleatorio
+  const [randomNumber, setRandomNumber] = useState(0);
 
+  //  Estado para el contador
+  const [counter, setCounter] = useState(0);
 
-function ThemeToggle() {
-    const { toggleTheme, theme } = useContext(ThemeContext);
-  
-    const buttonText = theme === "light" ? "Cambiar a oscuro" : "Cambiar a claro";
-  
-    return (
-      <button className={`theme-button ${theme}`} onClick={toggleTheme}>
-        {buttonText}
-      </button>
-    );
-  }
-  
+  // funcion NO optimizada (se crea cada vez que se renderiza el componente)
+  const addCounter = () => {
+    console.log("Función addCounter se creó");
+    setCounter((prev) => prev + 1);
+  };
 
-  function ThemeDisplay() {
-    const { theme } = useContext(ThemeContext);
-    const imgUrl = theme === "light" 
-    ? "https://i.postimg.cc/BbxHMQdr/images-removebg-preview.png" 
-    : "https://i.imgflip.com/9t8y0s.gif";
-    return (
-      <div className={`card ${theme}`}>
-        <h2>Tema Actual : {theme === "light" ? "Claro" : "Oscuro"}</h2>
-        <img src={imgUrl} alt="dibujito" className={`theme-img ${theme}`} />
-        </div>
-    );
-  }
+  // funcion SI optimizada (se memoriza la función)
+  const createRandom = useCallback(() => {
+    console.log("Función createRandom ejecutada");
+    const random = Math.floor(Math.random() * 100);
+    setRandomNumber(random);
+  }, []); 
 
+  return (
+    <div className="card">
+      <h1>Ejercicio de useCallback</h1>
+      <div className="button-area">
+  <div className="button-group">
+    <div className="counter-box">Contador: {counter}</div>
+    <ButtonNormal onClick={addCounter} />
+  </div>
 
+  <div className="button-group">
+    <div className="counter-box">Aleatorio: {randomNumber}</div>
+    <ButtonOptimizado onClick={createRandom} />
+  </div>
+</div>
+      
 
-  function App() {  
-    return (
-      <ThemeProvider>
-        <InnerApp/>
-      </ThemeProvider>
-    );
-  }
-
-  function InnerApp() {
-    const { theme } = useContext(ThemeContext);
-    return (
-      <div className={`app-container ${theme}`}>
-        <h1>Ejemplo de Contexto con React CDN</h1>
-        <p>
-        {theme === "light"
-            ? "¡Disfruta el sol y la energía positiva!"
-            : "Relájate con un ambiente nocturno encantador."}
-        </p>
-        <ThemeDisplay />
-        <ThemeToggle />
-      </div>
-    );
-  }
-  
+    </div>
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
